@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/files/css/ssm.css">
+</head>
+<body>
+
+  <!-- Tombol toggle -->
+   <button id="toggle-btn">
+    <i class="bi bi-list"></i>
+   </button>
+
+   <!-- Sidebar -->
+    <div id="sidebar">
+      <a href="/index.html"><i class="bi bi-house-door"> Home</i></a>
+      <a href="/files/ssm.html"><i class="bi bi-bag"> SSM - Sosmed</i></a>
+      <a href="/files/stok.html"><i class="bi bi-graph-up"></i> Stok Akun</i></a>
+    </div>
+  
+  <!-- Header -->
+   <div class="header">
+    <h2>SSM - Sosmed</h2>
+   </div>
+
+   <!-- konten -->
+    <div class="profile-card">
+      <img src="/assets/ic.jpg" alt="Admin">
+      <div class="profile-info">
+        <h3>Halo, Im Fahri</h3>
+        <p>I am the admin of Fahri Store25!!</p>
+      </div>
+    </div>
+
+    <div class="container mt-4" id="produk-container">
+  <!-- Produk akan dimuat dari ssm.json -->
+    </div>
+
+    <!-- Bottom Sheet -->
+<div class="bottom-sheet" id="detailSheet">
+  <div class="sheet-content" id="sheetContent">
+    <span class="close-btn" onclick="closeSheet()"><i class="bi bi-x-lg"></i></span>
+    <div id="sheetIcon" class="mb-2 fs-2"></div>
+    <h4 id="sheetNama"></h4>
+    <p id="sheetHarga" class="text-muted"></p>
+    <button class="btn btn-primary mt-3">Buy Now!</button>
+  </div>
+</div>
+
+<!-- Bottom Sheet QRIS -->
+<div class="bottom-sheet" id="qrisSheet">
+  <div class="sheet-content text-center position-relative">
+    <span class="close-btn" onclick="closeQrisSheet()"><i class="bi bi-x-lg"></i></span>
+    <h5 class="mb-3">Scan QRIS untuk Pembayaran</h5>
+    <img src="/assets/qr.png" alt="QRIS" style="width: 200px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <br>
+    <a href="https://wa.me/6289601314023?text=Halo admin, saya sudah transfer untuk pembelian produk." class="btn btn-success mt-4">
+      <i class="bi bi-whatsapp"></i> Kirim Bukti Tf
+    </a>
+  </div>
+</div>
+
+<!-- Bottom Sheet: Cara Pembelian -->
+<div class="bottom-sheet" id="caraBeliSheet">
+  <div class="sheet-content position-relative text-white">
+    <span class="close-btn" onclick="closeCaraBeli()"><i class="bi bi-x-lg"></i></span>
+    <h5><i class="bi bi-info-circle"></i> Cara Melakukan Pembelian</h5>
+    <ol class="mt-3">
+      <li>Pilih produk yang kamu inginkan.</li>
+      <li>Klik tombol <strong>Buy Now!</strong>.</li>
+      <li>Scan QRIS yang muncul untuk melakukan pembayaran.</li>
+      <li>Klik tombol <strong>Kirim Bukti Tf</strong> untuk konfirmasi via WhatsApp.</li>
+      <li>Tunggu admin memproses pesanan kamu.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Bottom Sheet: Cara Kerja -->
+<div class="bottom-sheet" id="caraKerjaSheet">
+  <div class="sheet-content position-relative text-white">
+    <span class="close-btn" onclick="closeCaraKerja()"><i class="bi bi-x-lg"></i></span>
+    <h5><i class="bi bi-gear"></i> Cara Kerja</h5>
+    <ul class="mt-3">
+      <li><strong>Username (Akun):</strong> Digunakan untuk layanan Followers.</li>
+      <li><strong>Link Video atau Foto:</strong> Digunakan untuk layanan Like atau View.</li>
+    </ul>
+    <div class="alert alert-warning text-dark mt-3" style="backdrop-filter: blur(10px); border-radius: 10px;">
+      <strong>Note:</strong> Dilarang keras men-private akun!
+    </div>
+  </div>
+</div>
+
+
+
+<div class="d-flex gap-2 m-3">
+  <button style="margin-right: 55px;" class="btn btn-info text-white" onclick="openCaraBeli()">
+    <i class="bi bi-question-circle"></i> Cara Pembelian
+  </button>
+  <button class="btn btn-primary text-white" onclick="openCaraKerja()">
+    <i class="bi bi-gear"></i> Cara Kerja
+  </button>
+</div>
+
+
+    <script>
+        fetch('/files/datajs/ssm.json')
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('produk-container');
+      data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'card-produk mb-3 d-flex align-items-center justify-content-between';
+        card.innerHTML = `
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi ${item.icon} fs-2"></i>
+            <div>
+              <h5 class="mb-0">${item.nama}</h5>
+              <small class="text-muted">${item.harga}</small>
+            </div>
+          </div>
+        `;
+        card.onclick = () => openSheet(item);
+        container.appendChild(card);
+      });
+    });
+
+  function openSheet(item) {
+    document.getElementById('sheetIcon').innerHTML = `<i class="bi ${item.icon}"></i>`;
+    document.getElementById('sheetNama').innerText = item.nama;
+    document.getElementById('sheetHarga').innerText = item.harga;
+    document.getElementById('detailSheet').classList.add('active');
+  }
+
+  function closeSheet() {
+    document.getElementById('detailSheet').classList.remove('active');
+  }
+
+    // Buka QRIS Sheet
+  function openQrisSheet() {
+    closeSheet(); // Tutup sheet sebelumnya
+    document.getElementById('qrisSheet').classList.add('active');
+  }
+
+  // Tutup QRIS Sheet
+  function closeQrisSheet() {
+    document.getElementById('qrisSheet').classList.remove('active');
+  }
+
+  // Tambahkan event Buy Now ke tombol
+  document.addEventListener('DOMContentLoaded', () => {
+    const buyBtn = document.querySelector('#detailSheet .btn');
+    buyBtn.addEventListener('click', openQrisSheet);
+  });
+
+    function openCaraBeli() {
+    document.getElementById('caraBeliSheet').classList.add('active');
+  }
+
+  function closeCaraBeli() {
+    document.getElementById('caraBeliSheet').classList.remove('active');
+  }
+
+    function openCaraKerja() {
+    document.getElementById('caraKerjaSheet').classList.add('active');
+  }
+
+  function closeCaraKerja() {
+    document.getElementById('caraKerjaSheet').classList.remove('active');
+  }
+
+      const toggleBtn = document.getElementById('toggle-btn');
+      const sidebar = document.getElementById('sidebar');
+
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+    </script>
+</body>
+</html>

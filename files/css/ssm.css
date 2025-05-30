@@ -1,0 +1,165 @@
+body {
+    background-image: url('/assets/bg.jpeg');
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    font-family: 'ip', sans-serif;
+}
+
+@font-face {
+    font-family: 'ip';
+    src: url(/assets/ip.OTF) format('opentype');
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    transition: left 0.3s ease;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#sidebar a {
+    color: white;
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+#sidebar a:hover {
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
+#toggle-btn {
+    position: fixed;
+    top: 2px;
+    left: 15px;
+    z-index: 1101;
+    background: rgba(255, 255, 255, 0.0);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: white;
+}
+
+.header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    z-index: 999;
+    text-align: center;
+    color: white;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    max-width: 450px;
+    margin: 20px auto;
+}
+
+.profile-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.profile-card h3 {
+    margin: 0;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-card p {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.card-produk {
+  border-radius: 20px;
+  padding: 16px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.card-produk:hover {
+  transform: scale(1.02);
+}
+
+.bottom-sheet {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.2);
+  transition: bottom 0.3s ease;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.bottom-sheet.active {
+  bottom: 0;
+}
+
+.bottom-sheet .sheet-content {
+  padding: 20px;
+}
+
+
+.close-btn {
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.alert {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border: none;
+}

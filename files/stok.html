@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/files/css/stok.css">
+</head>
+<body>
+
+  <!-- Tombol toggle -->
+   <button id="toggle-btn">
+    <i class="bi bi-list"></i>
+   </button>
+
+   <!-- Sidebar -->
+    <div id="sidebar">
+      <a href="/index.html"><i class="bi bi-house-door"> Home</i></a>
+      <a href="/files/ssm.html"><i class="bi bi-bag"> SSM - Sosmed</i></a>
+      <a href="/files/stok.html"><i class="bi bi-graph-up"></i> Stok Akun</i></a>
+    </div>
+  
+  <!-- Header -->
+   <div class="header">
+    <h2>Stok Akun</h2>
+   </div>
+
+   <!-- konten -->
+    <div class="profile-card">
+      <img src="/assets/ic.jpg" alt="Admin">
+      <div class="profile-info">
+        <h3>Halo, Im Fahri</h3>
+        <p>I am the admin of Fahri Store25!!</p>
+      </div>
+    </div>
+
+    <div class="container my-4">
+  <div id="stok-list" class="row g-3"></div>
+</div>
+
+<!-- Menu pertama -->
+<div id="bottomMenu" class="bottom-menu blur-bg d-none">
+  <div class="text-center">
+    <i class="bi bi-box-seam fs-1"></i>
+    <h5 id="menuNama"></h5>
+    <p id="menuHarga"></p>
+    <button class="btn btn-success" id="buyNowBtn">Buy Now!</button>
+  </div>
+</div>
+
+<!-- Menu kedua (QRIS) -->
+<div id="qrMenu" class="bottom-menu blur-bg d-none">
+  <div class="text-center">
+    <img src="/assets/qr.png" alt="QRIS" class="img-fluid rounded" width="200">
+    <a href="https://wa.me/6289601314023?text=Halo admin, saya sudah transfer!" target="_blank" class="btn btn-primary mt-3">Kirim Bukti Tf</a>
+  </div>
+</div>
+
+
+
+    <script>
+  fetch('/files/datajs/stok.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('stok-list');
+      const menu = document.getElementById('bottomMenu');
+      const qrMenu = document.getElementById('qrMenu');
+      const menuNama = document.getElementById('menuNama');
+      const menuHarga = document.getElementById('menuHarga');
+      const buyNowBtn = document.getElementById('buyNowBtn');
+
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'col-md-4';
+
+        card.innerHTML = `
+          <div class="card shadow-sm border-0" style="border-radius: 15px;">
+            <img src="${item.img}" class="card-img-top" alt="${item.nama}" style="height: 180px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <div class="card-body bg-light text-dark" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+              <h5 class="card-title">${item.nama}</h5>
+              <p class="card-text fw-bold">Rp ${item.Rp}</p>
+              ${item.Diskon ? `<span class="badge bg-danger">Diskon ${item.Diskon}</span>` : ''}
+              <button class="btn btn-primary w-100 mt-2 beli-btn">Beli Sekarang</button>
+            </div>
+          </div>
+        `;
+
+        const btn = card.querySelector('.beli-btn');
+        btn.addEventListener('click', () => {
+          menu.classList.remove('d-none');
+          menuNama.textContent = item.nama;
+          menuHarga.textContent = `Rp ${item.Rp}`;
+        });
+
+        container.appendChild(card);
+      });
+
+      buyNowBtn.addEventListener('click', () => {
+        document.getElementById('bottomMenu').classList.add('d-none');
+        qrMenu.classList.remove('d-none');
+      });
+    });
+
+      const toggleBtn = document.getElementById('toggle-btn');
+      const sidebar = document.getElementById('sidebar');
+
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+    </script>
+</body>
+</html>
